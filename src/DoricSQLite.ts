@@ -13,9 +13,30 @@ import { Database } from "./SQLite";
 
 @Entry
 class DoricSQLite extends Panel {
+  dataBase?: Database;
+  onCreate() {
+    this.init().then();
+  }
+
+  async init() {
+    this.dataBase = await Database.open(context, "test");
+    if (this.dataBase) {
+      this.dataBase.execute(`CREATE TABLE FileRecord  (
+            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            name Text,
+            type Text,
+            fid Text,
+            cid Text,
+            pid Text,
+            pc Text,
+            extra Text,
+            timestamp datetime default (datetime('now', 'localtime'))
+       )`);
+    }
+  }
+
   onShow() {
     navbar(context).setTitle("DoricSQLite");
-    Database.open(context, "text").then();
   }
   build(rootView: Group): void {
     let number: Text;
@@ -32,6 +53,10 @@ class DoricSQLite extends Panel {
         textColor: Color.WHITE,
         onClick: () => {
           number.text = `${++count}`;
+          this.dataBase?.execute(
+            "insert into FileRecord (name,type) values (?,?)",
+            [`index:${count}`, "test"]
+          );
         },
         layoutConfig: layoutConfig().just(),
         width: 200,

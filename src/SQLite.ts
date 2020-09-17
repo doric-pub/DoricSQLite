@@ -14,7 +14,7 @@ export class Database {
   ) {
     await this.context.callNative("sqlite", "execute", {
       statement,
-      parameters,
+      parameters: parameters || [],
       dbId: this.dbId,
     });
   }

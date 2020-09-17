@@ -18,8 +18,6 @@ package pub.doric.extension.sqlite;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.util.Base64;
 
 import com.github.pengfeizhou.jscore.JSValue;
