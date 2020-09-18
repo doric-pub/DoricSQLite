@@ -22,11 +22,11 @@ export class Database {
     statement: string,
     parameters?: (string | number | null)[]
   ) {
-    return await this.context.callNative("sqlite", "executeQuery", {
+    return (await this.context.callNative("sqlite", "executeQuery", {
       statement,
       parameters: parameters || [],
       dbId: this.dbId,
-    });
+    })) as any[];
   }
 
   public async close() {

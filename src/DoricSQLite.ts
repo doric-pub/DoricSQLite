@@ -8,6 +8,7 @@ import {
   Text,
   Color,
   navbar,
+  modal,
 } from "doric";
 import { Database } from "./SQLite";
 
@@ -21,7 +22,7 @@ class DoricSQLite extends Panel {
   async init() {
     this.dataBase = await Database.open(context, "test");
     if (this.dataBase) {
-      this.dataBase.execute(`CREATE TABLE FileRecord  (
+      await this.dataBase.execute(`CREATE TABLE IF NOT EXISTS FileRecord  (
             id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             name Text,
             type Text,
@@ -32,6 +33,11 @@ class DoricSQLite extends Panel {
             extra Text,
             timestamp datetime default (datetime('now', 'localtime'))
        )`);
+      const result = await this.dataBase.executeQuery(
+        "SELECT * FROM FileRecord WHERE id = ?",
+        [2]
+      );
+      modal(context).alert(JSON.stringify(result));
     }
   }
 
