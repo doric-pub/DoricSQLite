@@ -1,5 +1,6 @@
 #import "SceneDelegate.h"
 #import <DoricCore/Doric.h>
+#import <DoricSQLite/DoricSQLiteLibrary.h>
 
 #if DEBUG
 
@@ -12,6 +13,7 @@
 
 @implementation SceneDelegate
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions {
+    [Doric registerLibrary:[DoricSQLiteLibrary new]];
     UIWindowScene *windowScene = (UIWindowScene *) scene;
     NSString *bundleName = @"DoricSQLite";
     DoricViewController *doricViewController = [[DoricViewController alloc] initWithSource:[NSString stringWithFormat:@"assets://src/%@.js", bundleName]

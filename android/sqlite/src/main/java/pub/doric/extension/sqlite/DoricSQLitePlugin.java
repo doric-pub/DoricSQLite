@@ -15,6 +15,8 @@
  */
 package pub.doric.extension.sqlite;
 
+import android.os.Environment;
+
 import com.github.pengfeizhou.jscore.JSArray;
 import com.github.pengfeizhou.jscore.JSObject;
 import com.github.pengfeizhou.jscore.JavaValue;
@@ -73,6 +75,32 @@ public class DoricSQLitePlugin extends DoricJavaPlugin {
         if (database != null) {
             database.execute(statement, parameters.toArray());
             promise.resolve();
+        } else {
+            promise.reject(new JavaValue("Cannot find db for " + dbId));
+        }
+    }
+
+    @DoricMethod
+    public void executeUpdateDelete(JSObject argument, DoricPromise promise) {
+        String dbId = argument.getProperty("dbId").asString().value();
+        String statement = argument.getProperty("statement").asString().value();
+        JSArray parameters = argument.getProperty("parameters").asArray();
+        DoricSQLiteDatabase database = sqLiteDatabaseMap.get(dbId);
+        if (database != null) {
+            promise.resolve(new JavaValue(database.executeUpdateDelete(statement, parameters.toArray())));
+        } else {
+            promise.reject(new JavaValue("Cannot find db for " + dbId));
+        }
+    }
+
+    @DoricMethod
+    public void executeInsert(JSObject argument, DoricPromise promise) {
+        String dbId = argument.getProperty("dbId").asString().value();
+        String statement = argument.getProperty("statement").asString().value();
+        JSArray parameters = argument.getProperty("parameters").asArray();
+        DoricSQLiteDatabase database = sqLiteDatabaseMap.get(dbId);
+        if (database != null) {
+            promise.resolve(new JavaValue(database.executeInsert(statement, parameters.toArray())));
         } else {
             promise.reject(new JavaValue("Cannot find db for " + dbId));
         }

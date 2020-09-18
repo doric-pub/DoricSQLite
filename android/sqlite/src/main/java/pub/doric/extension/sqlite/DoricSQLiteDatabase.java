@@ -60,6 +60,31 @@ public class DoricSQLiteDatabase {
         }
     }
 
+    public int executeUpdateDelete(String query, JSValue[] arguments) {
+        SQLiteStatement statement = prepareSQLiteStatement(query, arguments);
+        this.db.beginTransaction();
+        try {
+            int ret = statement.executeUpdateDelete();
+            this.db.setTransactionSuccessful();
+            return ret;
+        } finally {
+            this.db.endTransaction();
+        }
+    }
+
+    public long executeInsert(String query, JSValue[] arguments) {
+        SQLiteStatement statement = prepareSQLiteStatement(query, arguments);
+        this.db.beginTransaction();
+        try {
+            long ret = statement.executeInsert();
+            this.db.setTransactionSuccessful();
+            return ret;
+        } finally {
+            this.db.endTransaction();
+        }
+    }
+
+
     public JSONArray executeQuery(String query, JSValue[] arguments) {
         String[] params = new String[arguments.length];
         for (int i = 0; i < arguments.length; i++) {

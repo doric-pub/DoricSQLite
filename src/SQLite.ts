@@ -29,6 +29,28 @@ export class Database {
     })) as any[];
   }
 
+  public async executeUpdateDelete(
+    statement: string,
+    parameters?: (string | number | null)[]
+  ) {
+    return (await this.context.callNative("sqlite", "executeUpdateDelete", {
+      statement,
+      parameters: parameters || [],
+      dbId: this.dbId,
+    })) as number;
+  }
+
+  public async executeInsert(
+    statement: string,
+    parameters?: (string | number | null)[]
+  ) {
+    return (await this.context.callNative("sqlite", "executeInsert", {
+      statement,
+      parameters: parameters || [],
+      dbId: this.dbId,
+    })) as number;
+  }
+
   public async close() {
     await this.context.callNative("sqlite", "close", {
       dbId: this.dbId,

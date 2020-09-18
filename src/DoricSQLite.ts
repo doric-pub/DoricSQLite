@@ -35,7 +35,7 @@ class DoricSQLite extends Panel {
        )`);
       const result = await this.dataBase.executeQuery(
         "SELECT * FROM FileRecord WHERE id = ?",
-        [2]
+        [4]
       );
       modal(context).alert(JSON.stringify(result));
     }
