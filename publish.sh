@@ -9,6 +9,10 @@ CURRENT_VERSION=$(cat $CURRENT_DIR/version)
 
 echo "Current version is "$CURRENT_VERSION
 
+git add version
+
+git commit -m "Modify version file ${CURRENT_VERSION}"
+
 ## JS
 npm version $CURRENT_VERSION --allow-same-version
 
