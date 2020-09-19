@@ -27,8 +27,6 @@ jobs:
           git config user.name "pengfei.zhou"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           git checkout master
-      - name: Setup
-        run: sh setup.sh
       - name: Install Cocoapods
         run: |
           gem install cocoapods
