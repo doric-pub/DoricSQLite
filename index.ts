@@ -1,1 +1,1 @@
-export default ['src/DoricSQLite']
+export * from "./src/SQLite";

@@ -34,3 +34,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation "pub.doric:core:$doricSDKVersion"
 }
+if (new File('scripts/upload.gradle').exists()) {
+    apply from: rootProject.file('scripts/upload.gradle')
+}

@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
                          DESC
   
     s.homepage         = 'https://github.com/doric-pub'
-    # s.license          = { :type => 'Apache-2.0', :file => 'LICENSE' }
+    s.license          = { :type => 'Apache-2.0', :file => 'LICENSE' }
     s.author           = { 'pengfeizhou' => 'pengfeizhou@foxmail.com' }
     s.source           = { :git => 'https://github.com/doric-pub/DoricSQLite.git', :tag => s.version.to_s }
   
