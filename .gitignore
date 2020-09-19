@@ -7,3 +7,4 @@ xcuserdata
 Pods/
 *.lock
 *.xcworkspace/xcshareddata/xcdebugger/
+package-lock.json
