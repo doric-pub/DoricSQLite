@@ -37,6 +37,7 @@ jobs:
       - name: Install doric-cli
         run: |
           npm install doric-cli -g
+          npm install
       - name: Publish
         run: |
           sh publish.sh
