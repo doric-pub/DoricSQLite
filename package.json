@@ -1,6 +1,6 @@
 {
   "name": "doric-sqlite",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
