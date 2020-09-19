@@ -33,7 +33,7 @@ echo "Publish JS"
 cd $CURRENT_DIR && npm publish
 
 echo "Publish Android"
-cd $CURRENT_DIR/android && ./gradlew clean publishAll
+cd $CURRENT_DIR/android && ./gradlew clean publish
 
 echo "Publish iOS"
 cd $CURRENT_DIR && pod trunk push DoricSQLite.podspec --allow-warnings
