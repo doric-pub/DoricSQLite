@@ -24,11 +24,19 @@
 
 - (void)open:(NSDictionary *)args withPromise:(DoricPromise *)promise {
     NSString *fileName = args[@"fileName"];
-    NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *path;
+    if ([fileName hasPrefix:@"file://"]) {
+        path = [fileName substringFromIndex:@"file://".length];
+    } else if ([fileName hasPrefix:@"/"]) {
+        path = fileName;
+    } else {
+        NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+        path = [NSString stringWithFormat:@"%@/%@.db", docDir, fileName];
+    }
     self.dbIdCounter++;
     NSMutableDictionary *dictionary = self.databaseDic.mutableCopy;
     NSString *dbId = [NSString stringWithFormat:@"%@", @(self.dbIdCounter)];
-    dictionary[dbId] = [[DoricSQLiteDatabase alloc] initWithPath:[NSString stringWithFormat:@"%@/%@.db", docDir, fileName]];
+    dictionary[dbId] = [[DoricSQLiteDatabase alloc] initWithPath:path];
     self.databaseDic = dictionary;
     [promise resolve:dbId];
 }

@@ -15,8 +15,6 @@
  */
 package pub.doric.extension.sqlite;
 
-import android.os.Environment;
-
 import com.github.pengfeizhou.jscore.JSArray;
 import com.github.pengfeizhou.jscore.JSObject;
 import com.github.pengfeizhou.jscore.JavaValue;
@@ -50,7 +48,15 @@ public class DoricSQLitePlugin extends DoricJavaPlugin {
     @DoricMethod
     public void open(JSObject argument, DoricPromise promise) {
         String fileName = argument.getProperty("fileName").asString().value();
-        DoricSQLiteDatabase database = new DoricSQLiteDatabase(getDoricContext().getContext().getDatabasePath(fileName));
+        File file;
+        if (fileName.startsWith("file://")) {
+            file = new File(fileName.substring("file://".length()));
+        } else if (fileName.startsWith("/")) {
+            file = new File(fileName);
+        } else {
+            file = getDoricContext().getContext().getDatabasePath(fileName);
+        }
+        DoricSQLiteDatabase database = new DoricSQLiteDatabase(file);
         String dbId = String.valueOf(atomicInteger.addAndGet(1));
         sqLiteDatabaseMap.put(dbId, database);
         promise.resolve(new JavaValue(dbId));
