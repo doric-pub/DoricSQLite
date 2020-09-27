@@ -9,36 +9,26 @@ import {
   Color,
   navbar,
   modal,
+  log,
 } from "doric";
-import { Database } from "./SQLite";
+import { Record, SQLiteConnection } from "./SQLiteORM";
 
 @Entry
 class DoricSQLite extends Panel {
-  dataBase?: Database;
   onCreate() {
     this.init().then();
   }
 
   async init() {
-    this.dataBase = await Database.open(context, "test");
-    if (this.dataBase) {
-      await this.dataBase.execute(`CREATE TABLE IF NOT EXISTS FileRecord  (
-            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            name Text,
-            type Text,
-            fid Text,
-            cid Text,
-            pid Text,
-            pc Text,
-            extra Text,
-            timestamp datetime default (datetime('now', 'localtime'))
-       )`);
-      const result = await this.dataBase.executeQuery(
-        "SELECT * FROM FileRecord WHERE id = ?",
-        [4]
-      );
-      modal(context).alert(JSON.stringify(result));
-    }
+    log("test start");
+    const sqlConnection = await SQLiteConnection.connect(context, "test");
+    const repo = await sqlConnection.getRepository(Record);
+    await repo.insert({
+      name: "dsfsf",
+      type: "sdfsdfs",
+      extra: "sdfsdfsdfsgsg",
+    });
+    log("test end");
   }
 
   onShow() {
@@ -59,10 +49,6 @@ class DoricSQLite extends Panel {
         textColor: Color.WHITE,
         onClick: () => {
           number.text = `${++count}`;
-          this.dataBase?.execute(
-            "insert into FileRecord (name,type) values (?,?)",
-            [`index:${count}`, "test"]
-          );
         },
         layoutConfig: layoutConfig().just(),
         width: 200,
