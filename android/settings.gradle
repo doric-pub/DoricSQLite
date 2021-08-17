@@ -1,3 +1,0 @@
-include ':sqlite'
-include ':app'
-rootProject.name='DoricSQLite'

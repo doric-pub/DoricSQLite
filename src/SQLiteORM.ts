@@ -1,4 +1,4 @@
-import { BridgeContext, ClassType, log } from "doric";
+import { BridgeContext, ClassType } from "doric";
 import { Database } from "./sqlite";
 import "reflect-metadata";
 

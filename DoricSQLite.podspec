@@ -15,8 +15,8 @@ Pod::Spec.new do |s|
   
     s.ios.deployment_target = '9.0'
   
-    s.source_files = 'iOS/Pod/Classes/**/*'
-    s.public_header_files = 'iOS/Pod/Classes/**/*.h'
+    s.source_files = 'iOS/Classes/**/*'
+    s.public_header_files = 'iOS/Classes/**/*.h'
     s.dependency 'DoricCore'
     s.library = 'sqlite3'
 end
